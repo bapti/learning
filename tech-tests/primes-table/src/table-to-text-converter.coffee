@@ -1,10 +1,7 @@
 
 
 horizontalLine = (character, width) ->
-    line = ""
-    while line.length < width
-        line += character
-    line
+    Array[width].join(character)
 
 findLargestNumberWidth = (listOfLists) ->
     max = listOfLists[0][0]
