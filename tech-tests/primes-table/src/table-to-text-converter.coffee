@@ -14,6 +14,12 @@ findLargestNumberWidth = (listOfLists) ->
                 max = number
     max.toString().length
 
+getTableWidth = (numberOfColumns, maxNumberWidth, padding) ->
+    widthOfNumbersInRow = numberOfColumns * maxNumberWidth
+    widthOfPaddingInRow = numberOfColumns * padding * 2
+    widthOfVerticalSeparatorsInRow = numberOfColumns + 1
+    widthOfNumbersInRow + widthOfPaddingInRow + widthOfVerticalSeparatorsInRow
+
 createRow = (listOfNumbers, maxNumberWidth) ->
     row = "|"
     for number in listOfNumbers
@@ -22,19 +28,15 @@ createRow = (listOfNumbers, maxNumberWidth) ->
         row = row + " #{padding}#{number} |"
     row
 
-module.exports.convertToText = (listOfLists, padding = 1) ->
-    maxNumberWidth = findLargestNumberWidth(listOfLists)
-    widthOfNumbersInRow = listOfLists.length * maxNumberWidth
-    widthOfPaddingInRow = listOfLists.length * padding * 2
-    widthOfVerticalSeparatorsInRow = listOfLists.length + 1
-
-    tableWidth = widthOfNumbersInRow +
-        widthOfPaddingInRow +
-        widthOfVerticalSeparatorsInRow
-
+createTextTable = (listOfLists, tableWidth, maxNumberWidth) ->
     textTable = ""
     for list in listOfLists
         textTable += horizontalLine("-", tableWidth) + "\n"
         textTable += createRow(list, maxNumberWidth) + "\n"
     textTable += horizontalLine("-", tableWidth)
-    textTable
+
+module.exports.convertToText = (listOfLists, padding = 1) ->
+    maxNumberWidth = findLargestNumberWidth(listOfLists)
+    tableWidth = getTableWidth(listOfLists.length, maxNumberWidth, padding)
+
+    createTextTable(listOfLists, tableWidth, maxNumberWidth)
