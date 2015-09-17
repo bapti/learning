@@ -22,15 +22,17 @@ createRow = (listOfNumbers, maxNumberWidth) ->
         row = row + " #{padding}#{number} |"
     row
 
-module.exports.convertToText = (listOfLists) ->
+module.exports.convertToText = (listOfLists, padding = 1) ->
     maxNumberWidth = findLargestNumberWidth(listOfLists)
-    padding = 1
-    textTable = ""
-    tableWidth =
-        (listOfLists.length * maxNumberWidth) +
-        (listOfLists.length * padding * 2) +
-        listOfLists.length + 1
+    widthOfNumbersInRow = listOfLists.length * maxNumberWidth
+    widthOfPaddingInRow = listOfLists.length * padding * 2
+    widthOfVerticalSeparatorsInRow = listOfLists.length + 1
 
+    tableWidth = widthOfNumbersInRow +
+        widthOfPaddingInRow +
+        widthOfVerticalSeparatorsInRow
+
+    textTable = ""
     for list in listOfLists
         textTable += horizontalLine("-", tableWidth) + "\n"
         textTable += createRow(list, maxNumberWidth) + "\n"
