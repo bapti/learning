@@ -1,7 +1,8 @@
-
-
 horizontalLine = (character, width) ->
-    Array[width].join(character)
+    if width == 0
+        ""
+    else
+        Array( width + 1 ).join(character);
 
 findLargestNumberWidth = (listOfLists) ->
     max = listOfLists[0][0]
@@ -17,7 +18,7 @@ getTableWidth = (numberOfColumns, maxNumberWidth, padding) ->
     widthOfVerticalSeparatorsInRow = numberOfColumns + 1
     widthOfNumbersInRow + widthOfPaddingInRow + widthOfVerticalSeparatorsInRow
 
-createRow = (listOfNumbers, maxNumberWidth) ->
+createRowText = (listOfNumbers, maxNumberWidth) ->
     row = "|"
     for number in listOfNumbers
         paddingWidth = maxNumberWidth - number.toString().length
@@ -29,7 +30,7 @@ createTextTable = (listOfLists, tableWidth, maxNumberWidth) ->
     textTable = ""
     for list in listOfLists
         textTable += horizontalLine("-", tableWidth) + "\n"
-        textTable += createRow(list, maxNumberWidth) + "\n"
+        textTable += createRowText(list, maxNumberWidth) + "\n"
     textTable += horizontalLine("-", tableWidth)
 
 module.exports.convertToText = (listOfLists, padding = 1) ->
