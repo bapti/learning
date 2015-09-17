@@ -7,9 +7,12 @@ horizontalLine = (character, width) ->
     line
 
 findLargestNumberWidth = (listOfLists) ->
-    length = listOfLists.length
-    largestNumber = listOfLists[length-1][length-1]
-    largestNumber.toString().length
+    max = listOfLists[0][0]
+    for list in listOfLists
+        for number in list
+            if number > max
+                max = number
+    max.toString().length
 
 createRow = (listOfNumbers, maxNumberWidth) ->
     row = "|"
