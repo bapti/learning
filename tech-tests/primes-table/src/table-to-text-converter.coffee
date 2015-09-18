@@ -23,7 +23,8 @@ createRowText = (listOfNumbers, maxNumberWidth) ->
     for number in listOfNumbers
         paddingWidth = maxNumberWidth - number.toString().length
         padding = horizontalLine(" ", paddingWidth)
-        row = row + " #{padding}#{number} |"
+        numberText = if number != 0 then number.toString() else " "
+        row = row + " #{padding}#{numberText} |"
     row
 
 createTextTable = (listOfLists, tableWidth, maxNumberWidth) ->
