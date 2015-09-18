@@ -22,3 +22,26 @@ The user should input a whole number N, where is N is at least 1. The applicatio
 For example, the 3rd prime number is 3 and the 5th prime number is 7. So the number in the 3rd row and 5th column should be 21 (because that’s 3 x 7).
 
 That’s it.
+
+#### Getting it running
+
+Install nodejs from [here](https://nodejs.org/en/download/)
+
+Run the following commands
+
+```sh
+# Install coffeescript for running the application
+npm install -g coffeescript
+
+# Install mocha for running the tests
+npm install -g mocha
+
+# Install all the local project dependencies
+npm install
+
+# Run this to start the application
+npm start
+
+# Run this to run the tests
+npm test
+```
