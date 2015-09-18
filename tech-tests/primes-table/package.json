@@ -13,6 +13,8 @@
   "dependencies": {
     "coffee-script": "^1.10.0",
     "highland": "^2.5.1",
+    "inquirer": "^0.10.0",
+    "machina": "^1.1.2",
     "prompt": "^0.2.14"
   },
   "devDependencies": {
