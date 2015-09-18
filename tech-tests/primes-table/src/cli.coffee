@@ -2,8 +2,6 @@ printer = require './prime-table-console-printer'
 machina = require 'machina'
 inquirer = require 'inquirer'
 
-tableSize = 1
-
 question1 =
     type: 'list'
     name: 'action'
@@ -27,8 +25,7 @@ tableSizeQuestion =
 
 program = new (machina.Fsm)(
     initialize: (options) ->
-        # your setup code goes here...
-        return
+        @data = {}
     namespace: 'primes-table'
     initialState: 'uninitialized'
     states:
@@ -52,11 +49,11 @@ program = new (machina.Fsm)(
                         @transition 'exit'
                     else
                         inquirer.prompt [tableSizeQuestion], (answers) =>
-                            tableSize = answers.tableSize
+                            @data.tableSize = answers.tableSize
                             @transition 'drawTable'
         drawTable:
             _onEnter: ->
-                printer.print tableSize
+                printer.print @data.tableSize
                 @transition 'promptForInput'
         exit:
             _onEnter: ->
