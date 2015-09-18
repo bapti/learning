@@ -31,4 +31,5 @@ module.exports.generateListOfPrimes = (numberOfPrimes) ->
         return firstTenPrimes.slice(0, numberOfPrimes)
 
     upperLimit = getUpperLimit(numberOfPrimes)
-    eratosthenes(upperLimit)
+    primes = eratosthenes(upperLimit)
+    primes.slice(0, numberOfPrimes)

@@ -1,6 +1,5 @@
 sut = require './../src/table-to-text-converter'
-
-
+should = require 'should'
 
 describe 'A text to table converter', () ->
     describe 'Convert to text', () ->

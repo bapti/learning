@@ -1,4 +1,5 @@
 sut = require './../src/multiplication-table-factory'
+should = require 'should'
 
 describe 'A multiplcation table factory', () ->
   describe 'create table', () ->
