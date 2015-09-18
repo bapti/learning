@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha --compilers coffee:coffee-script/register",
-    "start": "coffee src/index.coffee",
+    "start": "coffee src/cli.coffee",
     "watch": "mocha --watch --compilers coffee:coffee-script/register"
   },
   "author": "",
@@ -14,8 +14,7 @@
     "coffee-script": "^1.10.0",
     "highland": "^2.5.1",
     "inquirer": "^0.10.0",
-    "machina": "^1.1.2",
-    "prompt": "^0.2.14"
+    "machina": "^1.1.2"
   },
   "devDependencies": {
     "mocha": "^2.3.2",
