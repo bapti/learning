@@ -51,3 +51,5 @@ npm test
 The prime generator makes too many primes so I had to ask a slice on returning the primes.
 
 The prompt in the program file only lets you print once, it'd be nice if it went into a program loop
+
+I should really extract out some of the logic for printing from index.coffee into a separate module for testing a reusability
