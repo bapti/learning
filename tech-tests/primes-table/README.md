@@ -45,3 +45,9 @@ npm start
 # Run this to run the tests
 npm test
 ```
+
+#### Things that I don't like
+
+The prime generator makes too many primes so I had to ask a slice on returning the primes.
+
+The prompt in the program file only lets you print once, it'd be nice if it went into a program loop
