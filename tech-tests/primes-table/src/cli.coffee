@@ -25,7 +25,7 @@ tableSizeQuestion =
 
 program = new (machina.Fsm)(
     initialize: (options) ->
-        @data = {}
+
     namespace: 'primes-table'
     initialState: 'uninitialized'
     states:
@@ -33,7 +33,7 @@ program = new (machina.Fsm)(
             @deferUntilTransition()
             @transition 'welcome'
         welcome:
-            _onEnter: ->
+            _onEnter: (client) ->
                 console.log """
                 =================================================
 
@@ -41,22 +41,22 @@ program = new (machina.Fsm)(
 
                 =================================================
                 """
-                @transition 'promptForInput'
+                @transition( client, 'promptForInput' )
         promptForInput:
-            _onEnter: ->
+            _onEnter: (client) ->
                 inquirer.prompt [question1],(answers) =>
                     if answers.action == 'Exit'
-                        @transition 'exit'
+                        @transition( client, 'exit')
                     else
                         inquirer.prompt [tableSizeQuestion], (answers) =>
-                            @data.tableSize = answers.tableSize
-                            @transition 'drawTable'
+                            client.tableSize = answers.tableSize
+                            @transition( client, 'drawTable' )
         drawTable:
-            _onEnter: ->
-                printer.print @data.tableSize
-                @transition 'promptForInput'
+            _onEnter: (client) ->
+                printer.print client.tableSize
+                @transition( client, 'promptForInput' )
         exit:
-            _onEnter: ->
+            _onEnter: (client) ->
                 console.log """
                 =================================================
 
@@ -65,8 +65,9 @@ program = new (machina.Fsm)(
                 =================================================
                 """
                 process.exit(0)
-    welcome: ->
-        @handle 'welcome'
+    welcome: (client) ->
+        @handle( 'welcome', client )
 )
 
-program.welcome()
+client = {}
+program.welcome(client)
