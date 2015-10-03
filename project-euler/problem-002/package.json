@@ -1,0 +1,20 @@
+{
+  "name": "problem-008",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha",
+    "start": "node src/index.js",
+    "watch": "mocha --watch"
+  },
+  "author": "neil crawford",
+  "license": "MIT",
+  "dependencies": {
+    "highland": "^2.5.1"
+  },
+  "devDependencies": {
+    "mocha": "^2.3.2",
+    "should": "^7.1.0"
+  }
+}
