@@ -5,7 +5,7 @@ let sut = require('./../src/index')
 
 // What is the largest prime factor of the number 600851475143 ?
 //
-describe( 'Prime factors', () =>
+describe( 'Prime factors', () =>{
   describe( 'The largest prime factor of 2', () =>
     it( 'should be 2', (done) =>{
         sut(2, (err,result) =>{
@@ -51,4 +51,4 @@ describe( 'Prime factors', () =>
         })
     })
   })
-)
+})
