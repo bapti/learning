@@ -1,4 +1,6 @@
-export var takeWhile = (f) => {
+import _ from 'highland'
+
+export default (f) => {
   return (err, x, push, next) => {
     if (err) {
       push(err);
