@@ -1,32 +1,56 @@
 "use strict"
-require("babel/register");
-var _ = require('highland')
 
-var generator = () => {
-  let i = 20
-  return (push, next) => {
-    i++
-    push(null, i)
-    next()
+import _ from 'highland'
+import {reducers, primeFactors, naturalNumbers} from  "./../../highland-utils/src/index"
+
+var reducePrimeFactors = () => {
+  let primesAndProducts = []
+  return (err, arrayOfPrimes, push, next) => {
+    if (err) {
+      push(err)
+      next()
+    }
+    else if (arrayOfPrimes === _.nil) {
+      primesAndProducts.forEach((item) => {
+        push(null, item.arrayOfPrimes)
+      })
+      push(null, _.nil);
+    }
+    else {
+      let prime = arrayOfPrimes[0]
+      let product = arrayOfPrimes.reduce(reducers.product)
+      let primeAndProduct = primesAndProducts.find((element) => {
+        return element.prime == prime
+      })
+      if( primeAndProduct ) {
+        if ( primeAndProduct.product < product ) {
+          primeAndProduct.product = product
+          primeAndProduct.arrayOfPrimes = arrayOfPrimes
+        }
+      } else {
+        primesAndProducts.push({
+          prime,
+          product,
+          arrayOfPrimes
+        })
+      }
+      next()
+    }
   }
 }
 
-module.exports.smallestMultiple = (tests, done) => {
-  return _(generator())
-    .filter( (i) => {
-      if (i%10 === 0){
-        console.log("Trying " + i);
-      }
+var primeFactorGenerator = (n) => {
+  return _(primeFactors.generator(n))
+    .group(x => { return x })
+    .flatMap(x => { return _.values(x) })
+}
 
-      let isDivEven = true
-      tests.forEach((x) => {
-        isDivEven = isDivEven && (i % x === 0)
-      })
-
-      return isDivEven
-    })
-    .take(1)
-    .toArray((result) =>
-      done(null, result[0])
-    )
+export default (n, done) => {
+  return _(naturalNumbers())
+    .take(n)
+    .flatMap(x => primeFactorGenerator(x))
+    .consume(reducePrimeFactors())
+    .flatten()
+    .reduce1(reducers.product)
+    .pull(done)
 }
