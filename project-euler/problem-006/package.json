@@ -1,0 +1,22 @@
+{
+  "name": "problem-005",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --compilers js:babel/register",
+    "start": "node src/index.js",
+    "watch": "mocha --watch  --compilers js:babel/register"
+  },
+  "author": "neil crawford",
+  "license": "MIT",
+  "dependencies": {
+    "babel": "^5.8.23",
+    "highland": "^2.5.1",
+    "lodash": "^3.10.1"
+  },
+  "devDependencies": {
+    "mocha": "^2.3.2",
+    "should": "^7.1.0"
+  }
+}
