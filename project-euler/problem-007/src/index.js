@@ -1,8 +1,16 @@
 import _ from 'highland'
-import { primeNumbers } from "./../../highland-utils/src/index"
+import { primes } from "./../../highland-utils/src/index"
 
-export default (nthPrime, done) => {
-  return primeNumbers()
+console.log(primes);
+export function slow(nthPrime, done) {
+  return _(primes.primeGenerator())
+    .take(nthPrime)
+    .last()
+    .pull( done )
+}
+
+export function fast(nthPrime, done) {
+  return _(primes.primeGeneratorEratosthenes(nthPrime))
     .take(nthPrime)
     .last()
     .pull( done )
