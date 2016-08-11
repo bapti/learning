@@ -18,7 +18,6 @@ const question = (str) => str.endsWith('?');
 const forcefully = (str) => str.endsWith('!');
 const shouting = (str) => str === str.toUpperCase();
 const silence = (str) => str.trim() === "";
-const forcefulQuestion=  (str) => forcefully(str) && question(str);
 const onlyNumbers = (str) =>  parseInt(str.split('')
                                 .filter((x) => numbers.some((y) => y === x) )
                                 .join('')) > 0;
@@ -73,11 +72,7 @@ class Bob {
     //
     // YOUR CODE GOES HERE
     //
-    const reducer = (acc, predicate) => {
-      return predicate(message) && acc;
-    }
-
-
+    const reducer = (acc, predicate) => predicate(message) && acc;
 
     return tests
       .find(({predicates}) => predicates.reduce(reducer, true))
