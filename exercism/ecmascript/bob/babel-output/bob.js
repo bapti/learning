@@ -27,9 +27,13 @@ var not = function not(fn) {
     return !fn.apply(undefined, arguments);
   };
 };
-var statement = function statement(str) {
-  return str.endsWith('.');
+var endsWith = function endsWith(endStr) {
+  return function (str) {
+    return str.endsWith(endStr);
+  };
 };
+
+var statement = endsWith('.');
 var question = function question(str) {
   return str.endsWith('?');
 };
@@ -41,9 +45,6 @@ var shouting = function shouting(str) {
 };
 var silence = function silence(str) {
   return str.trim() === "";
-};
-var forcefulQuestion = function forcefulQuestion(str) {
-  return forcefully(str) && question(str);
 };
 var onlyNumbers = function onlyNumbers(str) {
   return parseInt(str.split('').filter(function (x) {

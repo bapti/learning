@@ -10,7 +10,7 @@ const answers = {
   fine: 'Fine. Be that way!'
 }
 
-const numbers = ["1","2","3","4","5","6","7","8","9", "0"]
+const numbers = ["1","2","3","4","5","6","7","8","9","0"]
 
 const not = (fn) => (...args) => !fn(...args);
 const endsWith = (endStr) => (str) => str.endsWith(endStr)
@@ -21,7 +21,7 @@ const forcefully = (str) => str.endsWith('!');
 const shouting = (str) => str === str.toUpperCase();
 const silence = (str) => str.trim() === "";
 const onlyNumbers = (str) =>  parseInt(str.split('')
-                                .filter((x) => numbers.some((y) => y === x) )
+                                .filter(x => numbers.some(y => y === x))
                                 .join('')) > 0;
 const calmly = not(shouting);
 
