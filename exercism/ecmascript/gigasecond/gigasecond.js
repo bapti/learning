@@ -1,13 +1,17 @@
+
+const getDateFromEpochWithUtcSeconds = utcSeconds =>
+  new Date(new Date(0).setUTCSeconds(utcSeconds))
+
 class Gigasecond {
 
   constructor(date){
-    this.inputUtcEpochSeconds = Math.floor(date.getTime() / 1000)
+    this.secondsSinceEpoch = Math.floor(date.getTime() / 1000)
   }
 
   date(){
     const oneGigasecond = 1000000000
-    const utcSeconds = this.inputUtcEpochSeconds + oneGigasecond
-    return new Date(new Date(0).setUTCSeconds(utcSeconds))
+    const utcSeconds = this.secondsSinceEpoch + oneGigasecond
+    return getDateFromEpochWithUtcSeconds(utcSeconds)
   }
 }
 
