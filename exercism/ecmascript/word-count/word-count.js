@@ -4,12 +4,12 @@ class Words {
   count(sentance){
     return sentance
       .toLowerCase()
-      .split(regex)
-      .filter( item => item.trim() !== "" )
-      .reduce( (acc, item) => {
-        acc[item] = !Number.isInteger(acc[item])
-          ? 1
-          : acc[item] + 1
+      .split( regex )
+      .filter( word => word )
+      .reduce( (acc, word) => {
+        !Number.isInteger(acc[word])
+          ? acc[word] = 1
+          : acc[word] += 1
         return acc
       },{})
   }
