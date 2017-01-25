@@ -1,12 +1,14 @@
 
+
 class Gigasecond {
-    constructor(){
-    }
+  var inputDate = null;
+  constructor(date){
+    inputDate = date
+  }
 
-
-    date(){
-
-    }
+  date(){
+    return inputDate;
+  }
 }
 
 export default Gigasecond
