@@ -30,3 +30,7 @@ describe 'A prime nummber generator', () ->
         it 'Should give back a list of primes of length 100000', () ->
             sut.generateListOfPrimes(100000).length
                 .should.equal(100000)
+
+        it 'Should give back a list of primes of length 1000000', () ->
+            sut.generateListOfPrimes(1000000).length
+                .should.equal(1000000)
