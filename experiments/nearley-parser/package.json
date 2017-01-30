@@ -1,0 +1,17 @@
+{
+  "name": "nearley-parser",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Experiment module with the Nearley parser",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "compile": "nearleyc ./grammar.ne --out ./grammar.js",
+    "test": "nearley-test grammar.js --input \"1+2+3\""
+  },
+  "author": "Neil Crawford",
+  "license": "ISC",
+  "dependencies": {
+    "nearley": "^2.7.11"
+  }
+}
