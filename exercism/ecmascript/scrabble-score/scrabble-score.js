@@ -16,8 +16,8 @@ const score = (word) => {
   return word
     .toUpperCase()
     .split('')
-    .map(x => scores[x])
-    .reduce((acc, x) => acc + x, 0)
+    .map(letter => scores[letter])
+    .reduce((total, letterScore) => total + letterScore, 0)
 }
 
 export default score
