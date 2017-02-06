@@ -1,17 +1,26 @@
 {
-  "name": "nearley-parser",
+  "name": "gedcom-parser",
   "version": "0.0.0",
   "private": true,
-  "description": "Experiment module with the Nearley parser",
-  "main": "index.js",
+  "description": "Experimental gedcom parser with the Nearley parser",
   "scripts": {
-    "start": "node index.js",
     "compile": "nearleyc ./grammar.ne --out ./grammar.js",
-    "test": "nearley-test grammar.js --input \"1+2+3\""
+    "test": "mocha --opts test/local.opts **/*spec.js",
+    "test-grammar": "nearley-test grammar.js --input \"1+2+3\""
   },
   "author": "Neil Crawford",
   "license": "ISC",
   "dependencies": {
     "nearley": "^2.7.11"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0",
+    "mockery": "^2.0.0",
+    "sinon": "^1.17.6",
+    "sinon-chai": "^2.8.0"
+  },
+  "engines": {
+    "node": ">=6.0.0"
   }
 }

@@ -2,7 +2,6 @@ import circularBuffer from './circular-buffer';
 import { bufferFullException as bufferFullException } from './circular-buffer';
 import { bufferEmptyException as bufferEmptyException } from './circular-buffer';
 
-
 describe('CircularBuffer', () => {
 
   it('reading an empty buffer throws a BufferEmptyException', () => {
