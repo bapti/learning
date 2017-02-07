@@ -4,14 +4,10 @@
 function id(x) {return x[0]; }
 var grammar = {
     ParserRules: [
-    {"name": "expression", "symbols": ["N", "MS", "N", "MS", "N"], "postprocess": d => d.join('')},
-    {"name": "MS", "symbols": [{"literal":"+"}], "postprocess": d => d[0]},
-    {"name": "MS", "symbols": [{"literal":"-"}], "postprocess": d => d[0]},
-    {"name": "N$ebnf$1", "symbols": [/[0-9]/]},
-    {"name": "N$ebnf$1", "symbols": [/[0-9]/, "N$ebnf$1"], "postprocess": function arrconcat(d) {return [d[0]].concat(d[1]);}},
-    {"name": "N", "symbols": ["N$ebnf$1"], "postprocess": d => d[0].join('')}
+    {"name": "file_start$string$1", "symbols": [{"literal":"0"}, {"literal":" "}, {"literal":"H"}, {"literal":"E"}, {"literal":"A"}, {"literal":"D"}], "postprocess": function joiner(d) {return d.join('');}},
+    {"name": "file_start", "symbols": ["file_start$string$1"], "postprocess": () => { fileInfo: {} }}
 ]
-  , ParserStart: "expression"
+  , ParserStart: "file_start"
 }
 if (typeof module !== 'undefined'&& typeof module.exports !== 'undefined') {
    module.exports = grammar;

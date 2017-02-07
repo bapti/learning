@@ -5,7 +5,8 @@
   "description": "Experimental gedcom parser with the Nearley parser",
   "scripts": {
     "compile": "nearleyc ./grammar.ne --out ./grammar.js",
-    "test": "mocha --opts test/local.opts **/*spec.js",
+    "test": "npm run compile && npm run test-mocha",
+    "test-mocha": "mocha --opts test/local.opts **/*spec.js",
     "test-grammar": "nearley-test grammar.js --input \"1+2+3\""
   },
   "author": "Neil Crawford",
