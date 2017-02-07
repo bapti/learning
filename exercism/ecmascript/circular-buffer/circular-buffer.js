@@ -3,23 +3,21 @@ var maxSize = 0
 
 const bufferEmptyException = () => new Error('Buffer is empty')
 const bufferFullException = () => new Error('Buffer is full')
+const throwError = fn => { throw fn() }
+const clear = () => data = []
 
-const checkBufferEmpty = fn => (...args) => {
-  if(data.length === 0){
-    throw bufferEmptyException()
-  }
-  return fn(...args)
-}
+const checkBufferEmpty = fn => (...args) =>
+  data.length === 0
+    ? throwError(bufferEmptyException)
+    : fn(...args)
 
-const discardInvalid = fn => value => !value ? null : fn(value)
+const checkBufferFull = fn => value =>
+  data.length >= maxSize
+    ? throwError(bufferFullException)
+    : fn(value)
 
-
-const checkBufferFull = (fn) => (...args) => {
-  if(data.length >= maxSize){
-    throw bufferFullException()
-  }
-  return fn(...args)
-}
+const discardInvalid = fn => value =>
+  !value ? null : fn(value)
 
 const read = () => {
   var result = data[0]
@@ -27,23 +25,24 @@ const read = () => {
   return result
 }
 
-const write = value => data.push(value)
-const clear = () => data = []
-
-const forceWrite = value => {
+const readIfMax = fn => value => {
   if(data.length >= maxSize){
     read()
   }
-  write(value)
+  fn(value)
 }
+
+const write = value => data.push(value)
+const safeWrite = checkBufferFull(discardInvalid(write))
+const safeRead = checkBufferEmpty(read)
 
 const circularBuffer = size => {
   clear()
   maxSize = size
   return {
-    read: checkBufferEmpty(read),
-    write: checkBufferFull(discardInvalid(write)),
-    forceWrite,
+    read: safeRead,
+    write: safeWrite,
+    forceWrite: readIfMax(safeWrite),
     clear
   }
 }
