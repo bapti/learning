@@ -24,5 +24,7 @@
   "licenses": [
     "MIT"
   ],
-  "dependencies": {}
+  "dependencies": {
+    "get-primes": "^1.0.3"
+  }
 }
