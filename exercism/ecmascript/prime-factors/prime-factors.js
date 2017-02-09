@@ -1,12 +1,9 @@
-import prime from 'get-primes'
-
-const primeNumbers = prime(900000);
-
 class PrimeFactors {
   for(n, factors = []) {
-    if(n === 1) return factors.sort((a,b) => a > b)
+    if(n === 1) return factors
 
-    let factor = primeNumbers.find(x => n % x === 0)
+    let factor = 2
+    while(n % factor !== 0) factor++
 
     return this.for(n/factor, [...factors, factor])
   }
