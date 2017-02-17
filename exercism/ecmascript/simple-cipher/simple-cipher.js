@@ -17,8 +17,11 @@ const convert = (key, text, action) =>
     .map( (char, i) => shiftChar(char, key[i], action) )
     .join('')
 
-const encode = (key, text) => convert(key, text, (a, b) => a + b)
-const decode = (key, text) => convert(key, text, (a, b) => a - b)
+const encode = (key, text) =>
+  convert(key, text, (a, b) => a + b)
+
+const decode = (key, text) => 
+  convert(key, text, (a, b) => a - b)
 
 const validateSeed = (seed) => {
   if( seed === undefined ) return 'abcdefghij'
