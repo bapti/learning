@@ -11,7 +11,6 @@ const commands = (hex) =>
     return mask & hex ? action(acc) : acc
   }, [])
 
-
 const secretHandshake = (hex) => {
   if(!Number.isInteger(hex)){
     throw new Error('Handshake must be a number')
