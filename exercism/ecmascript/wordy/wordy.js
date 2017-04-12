@@ -1,10 +1,12 @@
+const ArgumentError = () => new Error('Argument Error')
+
 const tokens = [
   { regex: /^[-+]?\d+/,      action: (x) => Number(x) },
   { regex: /^plus/,          action: (x) => (y) => x + y },
   { regex: /^minus/,         action: (x) => (y) => x - y },
   { regex: /^multipliedby/,  action: (x) => (y) => x * y },
   { regex: /^dividedby/,     action: (x) => (y) => x / y },
-  { regex: /^.+/,            action: () => { throw new Error('Argument Error') } }
+  { regex: /^.+/,            action: () => { throw ArgumentError() } }
 ]
 
 const applyTokens = (str, acc) => {
@@ -21,19 +23,14 @@ const applyTokens = (str, acc) => {
   return applyTokens(strRemaining, acc)
 }
 
-const parseQuestion = (question) => {
-  const trimmed = question.replace(/ |\?|What is/g, '') // remove crud
-  return applyTokens(trimmed, x => x)
-}
-
 class WordProblem {
   constructor(question) {
-    this.answer = parseQuestion.bind(null, question)
+    this.answer = () => {
+      const trimmed = question.replace(/ |\?|What|is/g, '') // remove crud
+      return applyTokens(trimmed, x => x)
+    }
   }
 }
-
-const ArgumentError = () =>
-  new Error('Argument Error')
 
 export default {
   WordProblem,
