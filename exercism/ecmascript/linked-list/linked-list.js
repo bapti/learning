@@ -1,3 +1,5 @@
+// Copy of http://exercism.io/submissions/a06f1b8bd6a64d1fb5501b7d848de4c1 as I try to understand it
+
 const insert = (prev, value, next) => {
   prev.next = next.prev = { prev, value, next }
 }
