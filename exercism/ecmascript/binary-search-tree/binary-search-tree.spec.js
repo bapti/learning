@@ -14,9 +14,12 @@ describe('BinarySearchTree', () => {
     expect(new BinarySearchTree(4).data).toEqual(4);
   });
 
-  xit('inserting less', () => {
+  it('inserting less', () => {
     let four = new BinarySearchTree(4);
+    console.log(four);
     four.insert(2);
+    console.log(four);
+    
 
     expect(four.data).toEqual(4);
     expect(four.left.data).toEqual(2);
