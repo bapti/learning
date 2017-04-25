@@ -1,24 +1,24 @@
+const node = n => ({ data: n, right: null, left: null })
 
-const node = (n) => {
-  return { data: n, right: null, left: null }
+const insert = (bst, n, attachToParent) => {
+  if(!bst) {
+    return attachToParent(node(n))
+  }
+  if(n > bst.data) {
+    return insert(bst.right, n, node => bst.right = node)
+  }
+  return insert(bst.left, n, node => bst.left = node)
 }
 
-const insert = (branch, n) => {
-  console.log(branch);
-
-  if(n > branch.data) {
-    if(branch.right) return insert(branch.right, n)
-    branch.right = node(n)
-    return
-  }
-
-  if(branch.left) return insert(branch.left, n)
-  branch.left = node(n)
-  return
+const each = (bst, it) => {
+  if(bst.left) each(bst.left, it)
+  if(bst.data) it(bst.data)
+  if(bst.right) each(bst.right, it)
 }
 
 export default (n) => {
   let tree = node(n)
-  tree.insert = insert.bind(null, tree)
+  tree.insert = n => insert(tree, n)
+  tree.each = it => each(tree, it)
   return tree
 }
