@@ -1,21 +1,26 @@
-function generate({ minFactor = 1, maxFactor = Number.MAX_VALUE }) {
-  const sorted = [...palindromes(minFactor, maxFactor)]
-    .sort((a, b) => a.value - b.value)
-
-  return { smallest: sorted[0], largest: sorted[sorted.length - 1] }
+const reverseNumber = (n, reverse = 0) => {
+  if(n === 0) return reverse
+  return reverseNumber(Math.floor(n / 10), reverse * 10 + n % 10)
 }
 
-function * palindromes(low, high){
+const isPalindrome = n => n === reverseNumber(n)
+
+function * generatePalindromes(low, high){
   for(var i = low; i <= high; i++) {
     for(var j = i; j <= high; j++) {
       const product = i*j
-      if(isPalindrome(product.toString())) {
+      if(isPalindrome(product)) {
         yield { factors: [i, j], value: product }
       }
     }
   }
 }
 
-const isPalindrome = str => str.split("").reverse().join("") === str
+function generate({ minFactor = 1, maxFactor = Number.MAX_VALUE }) {
+  const sorted = [...generatePalindromes(minFactor, maxFactor)]
+    .sort(({value: a}, {value: b}) => a - b)
+
+  return { smallest: sorted.shift(), largest: sorted.pop() }
+}
 
 export default generate;
