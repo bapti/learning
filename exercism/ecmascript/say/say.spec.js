@@ -2,7 +2,7 @@ import Say from './say';
 
 describe('say', () => {
   const say = new Say();
-  it('zero', () => {
+  xit('zero', () => {
     expect(say.inEnglish(0)).toBe('zero');
   });
 
@@ -55,7 +55,7 @@ describe('say', () => {
     expect(say.inEnglish(1000000000)).toBe('one billion');
   });
 
-  xit('a really big number', () => {
+  it('a really big number', () => {
     let expected = 'nine hundred eighty-seven billion ';
     expected += 'six hundred fifty-four million ';
     expected += 'three hundred twenty-one thousand ';
