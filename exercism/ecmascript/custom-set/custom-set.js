@@ -1,26 +1,70 @@
+export default class CustomSet {
+  constructor(arr = []) {
+    this._set = new Set(arr)
+  }
 
-const del = (set, n) => {
-  if(set[n]) delete set[n]
-  return this
-}
+  get set() {
+    return this._set
+  }
 
-const equal = (set1, set2) => {
-  const keys1 = Object.keys(set1)
-  const keys2 = Object.keys(set2)
-  if(keys1.length !== keys2.length) return false
-  return keys1.reduce((acc, _, i) => acc && keys1[i] === keys2[i], true)
-}
+  delete(n) {
+    this._set.delete(n)
+    return this
+  }
 
-const makeSet = (arr) => {
-  return { ...acc }
-}
+  eql({set: testSet}) {
+    if (this._set.size !== testSet.size) return false;
+    return [...this._set].every((n) => testSet.has(n));
+  }
 
-export default (arr) => {
-  const set = makeSet(arr)
-  console.log(set);
+  difference({set: testSet}) {
+    const diff = [...this._set].reduce((acc, n) => {
+      if(!testSet.has(n)) return [...acc, n]
+      return [...acc]
+    },[])
+    return new CustomSet(diff)
+  }
 
-  return {
-    delete: del.apply(null, set),
-    eql: equal.apply(null, set)
+  intersection({set: testSet}) {
+    const diff = [...this._set].reduce((acc, n) => {
+      if(testSet.has(n)) return [...acc, n]
+      return [...acc]
+    },[])
+    return new CustomSet(diff)
+  }
+
+  member(n) {
+    return this.set.has(n)
+  }
+
+  union({set: addSet}){
+    [...addSet].forEach(x => this.set.add(x))
+    return this
+  }
+
+  toList() {
+    return [...this.set]
+  }
+
+  subset({set: testSet}) {
+    return [...testSet].every((n) => this.set.has(n));
+  }
+
+  disjoint({set: testSet}) {
+    return [...this._set].every((n) => !testSet.has(n));
+  }
+
+  put(n) {
+    this._set.add(n)
+    return this
+  }
+
+  size() {
+    return this._set.size
+  }
+
+  empty() {
+    this._set.clear()
+    return this
   }
 }
