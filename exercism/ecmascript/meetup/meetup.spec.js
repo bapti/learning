@@ -42,7 +42,7 @@ describe('meetupDay()', () => {
     expect(meetupDay(2014, 11, 'Wednesday', 'last')).toEqual(new Date(2014, 11, 31));
   });
 
-  it('test last sunday of only four week february 2015', () => {
+  fit('test last sunday of only four week february 2015', () => {
     expect(meetupDay(2015, 1, 'Sunday', 'last')).toEqual(new Date(2015, 1, 22));
   });
 
