@@ -10,43 +10,25 @@ const pourBuckets = (bucket1, bucket2) => {
   }
   return { bucket1, bucket2 }
 }
+const goalResult = ({name}, {vol}, moves) =>
+  ({goalBucket: name, otherBucket: vol, moves: () => moves})
 
-const fillToGoal = (bucket1, bucket2, goalVol, moves=0) => {
-  if (bucket1.vol === goalVol || bucket2.vol === goalVol) {
-    return {
-      goalBucket: bucket1.vol === goalVol ? bucket1 : bucket2,
-      otherBucket: bucket1.vol === goalVol ? bucket2 : bucket1,
-      moves
-    }
-  }
+const findGoal = (b1, b2, goalVol, moves=0) => {
+  if (b1.vol === goalVol) return goalResult(b1, b2, moves)
+  if (b2.vol === goalVol) return goalResult(b2, b1, moves)
+  if (b2.vol === 0) return findGoal(b1, fillBucket(b2), goalVol, ++moves)
+  if (b1.vol === b1.max) return findGoal(emptyBucket(b1), b2, goalVol, ++moves)
 
-  if(bucket2.vol === 0) {
-    bucket2 = fillBucket(bucket2)
-  } else if (bucket1.vol === bucket1.max) {
-    bucket1 = emptyBucket(bucket1)
-  } else {
-    let result = pourBuckets(bucket1, bucket2)
-    bucket1 = result.bucket1
-    bucket2 = result.bucket2
-  }
-
-  return fillToGoal(bucket1, bucket2, goalVol, ++moves)
+  const result = pourBuckets(b1, b2)
+  return findGoal(result.bucket1, result.bucket2, goalVol, ++moves)
 }
 
 const twoBucket = (bucket1Max, bucket2Max, goalVol, startWith) => {
-  const b1 = { max: bucket1Max, vol: 0, name: 'one'}
-  const b2 = { max: bucket2Max, vol: 0, name: 'two'}
-  const {goalBucket, otherBucket, moves} = fillToGoal(
-    startWith === 'one' ? b2 : b1,
-    startWith === 'one' ? b1 : b2,
-    goalVol
-  )
-
-  return {
-    moves: () => moves,
-    goalBucket: goalBucket.name,
-    otherBucket: otherBucket.vol
-  }
+  const b1 = { vol: 0, max: bucket1Max, name: 'one' }
+  const b2 = { vol: 0, max: bucket2Max, name: 'two' }
+  return startWith === 'one'
+    ? findGoal(b2, b1, goalVol)
+    : findGoal(b1, b2, goalVol)
 }
 
 export default twoBucket
