@@ -1,21 +1,51 @@
-
-const fillToGoal = (b1, b2, g, startWith, b1v=0, b2v=0, i=0) => {
-  if (b1v === g || b2v === g) {
-    return { b1v, b2v, i }
+const fillBucket = ({max, name}) => ({ vol: max, max, name })
+const emptyBucket = ({max, name}) => ({ vol: 0, max, name })
+const pourBuckets = (bucket1, bucket2) => {
+  if (bucket1.vol + bucket2.vol > bucket1.max) {
+    bucket2.vol -= bucket1.max - bucket1.vol
+    bucket1.vol = bucket1.max
+  } else {
+    bucket1.vol += bucket2.vol
+    bucket2.vol = 0
   }
-
-  if(startWith === 'one')
-
-  return fillToGoal(b1, b1v, b2, b2v, g, ++i)
+  return { bucket1, bucket2 }
 }
 
-const twoBucket = (bucketOne, bucketTwo, goal, startWith) => {
-  const {b1v, b2v, i} = fillToGoal(bucketOne, bucketTwo, goal, startWith)
+const fillToGoal = (bucket1, bucket2, goalVol, moves=0) => {
+  if (bucket1.vol === goalVol || bucket2.vol === goalVol) {
+    return {
+      goalBucket: bucket1.vol === goalVol ? bucket1 : bucket2,
+      otherBucket: bucket1.vol === goalVol ? bucket2 : bucket1,
+      moves
+    }
+  }
+
+  if(bucket2.vol === 0) {
+    bucket2 = fillBucket(bucket2)
+  } else if (bucket1.vol === bucket1.max) {
+    bucket1 = emptyBucket(bucket1)
+  } else {
+    let result = pourBuckets(bucket1, bucket2)
+    bucket1 = result.bucket1
+    bucket2 = result.bucket2
+  }
+
+  return fillToGoal(bucket1, bucket2, goalVol, ++moves)
+}
+
+const twoBucket = (bucket1Max, bucket2Max, goalVol, startWith) => {
+  const b1 = { max: bucket1Max, vol: 0, name: 'one'}
+  const b2 = { max: bucket2Max, vol: 0, name: 'two'}
+  const {goalBucket, otherBucket, moves} = fillToGoal(
+    startWith === 'one' ? b2 : b1,
+    startWith === 'one' ? b1 : b2,
+    goalVol
+  )
 
   return {
-    moves: () => i,
-    goalBucket: b1v === goal ? 'one' : 'two',
-    otherBucket: b1v === goal ? b2v : b1v
+    moves: () => moves,
+    goalBucket: goalBucket.name,
+    otherBucket: otherBucket.vol
   }
 }
 
