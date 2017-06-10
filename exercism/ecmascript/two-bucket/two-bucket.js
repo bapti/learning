@@ -1,15 +1,14 @@
 const fillBucket = ({max, name}) => ({ vol: max, max, name })
 const emptyBucket = ({max, name}) => ({ vol: 0, max, name })
-const pourBuckets = (bucket1, bucket2) => {
-  if (bucket1.vol + bucket2.vol > bucket1.max) {
-    bucket2.vol -= bucket1.max - bucket1.vol
-    bucket1.vol = bucket1.max
-  } else {
-    bucket1.vol += bucket2.vol
-    bucket2.vol = 0
-  }
-  return { bucket1, bucket2 }
-}
+const addToBucket = ({vol, max, name}, add) => ({ vol: vol + add, max, name })
+const removeFromBucket = ({vol, max, name}, rm) => ({ vol: vol - rm, max, name })
+const spaceLeftInBucket = ({max, vol}) => max - vol
+
+const pourBuckets = (b1, b2) =>
+  b2.vol > spaceLeftInBucket(b1)
+    ? [ fillBucket(b1), removeFromBucket(b2, spaceLeftInBucket(b1)) ]
+    : [ addToBucket(b1, b2.vol), emptyBucket(b2) ]
+
 const goalResult = ({name}, {vol}, moves) =>
   ({goalBucket: name, otherBucket: vol, moves: () => moves})
 
@@ -19,8 +18,7 @@ const findGoal = (b1, b2, goalVol, moves=0) => {
   if (b2.vol === 0) return findGoal(b1, fillBucket(b2), goalVol, ++moves)
   if (b1.vol === b1.max) return findGoal(emptyBucket(b1), b2, goalVol, ++moves)
 
-  const result = pourBuckets(b1, b2)
-  return findGoal(result.bucket1, result.bucket2, goalVol, ++moves)
+  return findGoal(...pourBuckets(b1, b2), goalVol, ++moves)
 }
 
 const twoBucket = (bucket1Max, bucket2Max, goalVol, startWith) => {
