@@ -4,7 +4,7 @@ describe('Make diamond function', () => {
 
   var diamond = new Diamond();
 
-  xit('test letter A', function() {
+  it('test letter A', function() {
     const result = "A\n";
     expect(diamond.makeDiamond('A')).toEqual(result);
   });
@@ -18,7 +18,7 @@ describe('Make diamond function', () => {
     expect(diamond.makeDiamond('C')).toEqual(result);
   });
 
-  xit('test letter E', function() {
+  it('test letter E', function() {
     const result = ["    A    ",
       "   B B   ",
       "  C   C  ",
