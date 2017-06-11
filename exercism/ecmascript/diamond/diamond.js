@@ -3,7 +3,10 @@ const range = n => [...Array(n).keys()]
 const mapLetter = size => n =>
   n > size ? ALPHABET[size - Math.abs(size - n) - 1] : ALPHABET[n-1]
 
-const format = (size, width) => (letter, i) => {
+const format = (size, width) => (letter, row) => {
+  return range(width)
+    .map((_, col) => )
+    .join('')
   const pad1 = Math.abs(i-size)
   console.log('size', size, 'letter', letter, 'i', i, 'width', width);
   return letter
