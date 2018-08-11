@@ -22,10 +22,21 @@
   "jest": {
     "modulePathIgnorePatterns": [
       "package.json"
-    ]
+    ],
+    "testEnvironment": "node"
   },
   "babel": {
-    "presets": [["env",{"targets":[{"node": "current"}]}]
+    "presets": [
+      [
+        "env",
+        {
+          "targets": [
+            {
+              "node": "current"
+            }
+          ]
+        }
+      ]
     ],
     "plugins": [
       [
