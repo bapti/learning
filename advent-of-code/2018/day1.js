@@ -1,23 +1,13 @@
-const fs = require('fs'),
-      readline = require('readline'),
-      stream = require('stream');
+const { readFileToArray } = require('./utils');
 
-var currentFrequency = 0;
-var instream = fs.createReadStream('./day1-input.txt');
-var outstream = new stream;
-outstream.readable = true;
-outstream.writable = true;
+async function day1() {
+  const results = await readFileToArray('./day1-input.txt', function (line) {
+    return Number(line);
+  })
 
-var rl = readline.createInterface({
-    input: instream,
-    output: outstream,
-    terminal: false
-});
+  const frequency = results.reduce((acc, item) => (acc + item), 0)
 
-rl.on('line', function(line) {
-    currentFrequency += Number(line);
-});
+  console.log(frequency);
+}
 
-rl.on('close', function() {
-    console.log(currentFrequency);
-})
+day1();

@@ -1,44 +1,24 @@
-const fs = require('fs'),
-      readline = require('readline'),
-      stream = require('stream');
+const { readFileToArray } = require('./utils');
 
-var currentFrequency = 0;
-var frequencyMap = {};
-var finished = false;
+day1b();
 
-runThroughFile();
+async function day1b(frequencyMap = {}, currentFrequency = 0) {
 
-function runThroughFile() {
-    var instream = fs.createReadStream('./day1-input.txt');
-    var outstream = new stream;
-    outstream.readable = true;
-    outstream.writable = true;
-    
-    var rl = readline.createInterface({
-        input: instream,
-        output: outstream,
-        terminal: false
-    });
-    
-    rl.on('line', function(line) {
-        currentFrequency += Number(line);
-        frequencyMap[currentFrequency] = !frequencyMap[currentFrequency] 
-            ? 1 
-            : frequencyMap[currentFrequency] + 1;
-    
-        if(frequencyMap[currentFrequency] > 1) {
-            finished = true;
-            rl.close();
-        }
-    });
-    
-    rl.on('close', function() {
-        if(finished) {
-            console.log("First double", currentFrequency);
-        }
-        if(!finished) {
-            runThroughFile();
-        }
-    })
+  const frequencies = await readFileToArray('./day1-input.txt', function (line) {
+    return Number(line);
+  })
+
+  frequencies.reduce((acc, item) => {
+    currentFrequency += item;
+    if (!acc[currentFrequency]) {
+      acc[currentFrequency] = 1
+      return acc;
+    }
+
+    console.log(currentFrequency);
+    process.exit(0);
+  }, frequencyMap);
+
+  day1b(frequencyMap, currentFrequency);
 }
 
