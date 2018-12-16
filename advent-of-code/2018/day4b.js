@@ -38,18 +38,19 @@ async function main() {
       acc.push({
         guardId,
         totalMinutes: minutes.reduce((acc, i) => acc + i, 0),
-        mostCommon: minutes.findIndex(x => x == max)
+        mostCommon: minutes.findIndex(x => x == max),
+        max
       });
       return acc;
     },
     []
   );
 
-  guardMetedata.sort((a, b) => b.totalMinutes - a.totalMinutes);
+  guardMetedata.sort((a, b) => b.max - a.max);
 
   const { guardId, mostCommon } = guardMetedata[0];
 
-  console.log("Strategy A:", mostCommon * guardId);
+  console.log("Strategy B:", mostCommon * guardId);
 }
 
 function parseAction(action) {
