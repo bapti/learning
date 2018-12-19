@@ -1,12 +1,12 @@
-const fs = require('fs'),
-  readline = require('readline'),
-  stream = require('stream');
+const fs = require("fs"),
+  readline = require("readline"),
+  stream = require("stream");
 
 async function readFileToArray(filePath, lineIterator) {
-  return new Promise(function (resolve, reject) {
+  return new Promise(function(resolve, reject) {
     const outArray = [];
     var instream = fs.createReadStream(filePath);
-    var outstream = new stream;
+    var outstream = new stream();
     outstream.readable = true;
     outstream.writable = true;
 
@@ -16,21 +16,21 @@ async function readFileToArray(filePath, lineIterator) {
       terminal: false
     });
 
-    rl.on('line', function (line) {
-      const formattedLine = lineIterator(line);
+    rl.on("line", function(line) {
+      const formattedLine = lineIterator(line, outArray.length);
       outArray.push(formattedLine);
     });
 
-    rl.on('close', function () {
+    rl.on("close", function() {
       resolve(outArray);
-    })
+    });
 
-    rl.on('error', function (err) {
+    rl.on("error", function(err) {
       reject(err);
-    })
+    });
   });
 }
 
 module.exports = {
   readFileToArray
-}
+};
