@@ -1,7 +1,6 @@
 const { readFileToArray } = require("./utils");
 const _ = require("lodash");
-// const alphabet = [..."ABCDEFGHIJKLMNOPQRSTUVWXYZ"].reduce((acc, id) => {
-const alphabet = [..."ABCDEF"].reduce((acc, id) => {
+const alphabet = [..."ABCDEFGHIJKLMNOPQRSTUVWXYZ"].reduce((acc, id) => {
   acc[id] = { id, dependencies: [] };
   return acc;
 }, {});
@@ -10,8 +9,8 @@ main();
 function readLine(line) {
   const bits = line.split(" ");
   return {
-    id: bits[1],
-    dependsOn: bits[7]
+    id: bits[7],
+    dependsOn: bits[1]
   };
 }
 
@@ -23,8 +22,7 @@ function compareGroups(a, b) {
 }
 
 async function main() {
-  const steps = await readFileToArray("./day7-test-input.txt", readLine);
-  // const steps = await readFileToArray("./day7-input.txt", readLine);
+  const steps = await readFileToArray("./day7-input.txt", readLine);
 
   const groupedSteps = steps.reduce((acc, { id, dependsOn }) => {
     acc[id] = acc[id] || { id, dependencies: [] };
@@ -37,16 +35,12 @@ async function main() {
 
   while (groups.length > 0) {
     groups.sort(compareGroups);
-    const dumb = false;
-    const { id, dependencies } = groups.shift();
-    if (dependencies.length > 0) {
-      throw "wahhhh";
-    }
+    const { id } = groups.shift();
     orderedSteps.push(id);
     for (const group of groups) {
       group.dependencies = group.dependencies.filter(x => x !== id);
     }
   }
 
-  console.log(orderedSteps.reverse().join(""), orderedSteps.join("").length);
+  console.log(orderedSteps.join(""), orderedSteps.join("").length);
 }
