@@ -23,7 +23,7 @@ async function main() {
 
   for (let x1 = 0; x1 < 400; x1++) {
     for (let y1 = 0; y1 < 400; y1++) {
-      if (!points.find(x => x.distance(x1, y1) > 10000)) {
+      if (points.reduce((acc, p) => acc + p.distance(x1, y1), 0) < 10000) {
         matrix[x1][y1] = "#";
       }
     }
