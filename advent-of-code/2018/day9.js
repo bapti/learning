@@ -2,17 +2,34 @@
 
 --- Day 9: Marble Mania ---
 
-You talk to the Elves while you wait for your navigation system to initialize. To pass the time, they introduce you to their favorite marble game.
+You talk to the Elves while you wait for your navigation system to initialize. To pass the time, 
+they introduce you to their favorite marble game.
 
-The Elves play this game by taking turns arranging the marbles in a circle according to very particular rules. The marbles are numbered starting with 0 and increasing by 1 until every marble has a number.
+The Elves play this game by taking turns arranging the marbles in a circle according to 
+very particular rules. The marbles are numbered starting with 0 and increasing by 1 until every 
+marble has a number.
 
-First, the marble numbered 0 is placed in the circle. At this point, while it contains only a single marble, it is still a circle: the marble is both clockwise from itself and counter-clockwise from itself. This marble is designated the current marble.
+First, the marble numbered 0 is placed in the circle. At this point, while it contains only a 
+single marble, it is still a circle: the marble is both clockwise from itself and counter-clockwise 
+from itself. This marble is designated the current marble.
 
-Then, each Elf takes a turn placing the lowest-numbered remaining marble into the circle between the marbles that are 1 and 2 marbles clockwise of the current marble. (When the circle is large enough, this means that there is one marble between the marble that was just placed and the current marble.) The marble that was just placed then becomes the current marble.
+Then, each Elf takes a turn placing the lowest-numbered remaining marble into the circle 
+between the marbles that are 1 and 2 marbles clockwise of the current marble. (When the 
+circle is large enough, this means that there is one marble between the marble that was 
+just placed and the current marble.) The marble that was just placed then becomes the 
+current marble.
 
-However, if the marble that is about to be placed has a number which is a multiple of 23, something entirely different happens. First, the current player keeps the marble they would have placed, adding it to their score. In addition, the marble 7 marbles counter-clockwise from the current marble is removed from the circle and also added to the current player's score. The marble located immediately clockwise of the marble that was removed becomes the new current marble.
+However, if the marble that is about to be placed has a number which is a multiple of 23, 
+something entirely different happens. First, the current player keeps the marble they would 
+have placed, adding it to their score. In addition, the marble 7 marbles counter-clockwise 
+from the current marble is removed from the circle and also added to the current 
+player's score. The marble located immediately clockwise of the marble that was removed 
+becomes the new current marble.
 
-For example, suppose there are 9 players. After the marble with value 0 is placed in the middle, each player (shown in square brackets) takes a turn. The result of each of those turns would produce circles of marbles like this, where clockwise is to the right and the resulting current marble is in parentheses:
+For example, suppose there are 9 players. After the marble with value 0 is placed in the middle, 
+each player (shown in square brackets) takes a turn. The result of each of those turns would 
+produce circles of marbles like this, where clockwise is to the right and the resulting current 
+marble is in parentheses:
 
 [-] (0)
 [1]  0 (1)
@@ -41,7 +58,10 @@ For example, suppose there are 9 players. After the marble with value 0 is place
 [6]  0 16  8 17  4 18 19  2(24)20 10 21  5 22 11  1 12  6 13  3 14  7 15 
 [7]  0 16  8 17  4 18 19  2 24 20(25)10 21  5 22 11  1 12  6 13  3 14  7 15
 
-The goal is to be the player with the highest score after the last marble is used up. Assuming the example above ends after the marble numbered 25, the winning score is 23+9=32 (because player 5 kept marble 23 and removed marble 9, while no other player got any points in this very short example game).
+The goal is to be the player with the highest score after the last marble is used up. 
+Assuming the example above ends after the marble numbered 25, 
+the winning score is 23+9=32 (because player 5 kept marble 23 and removed marble 9, 
+  while no other player got any points in this very short example game).
 
 Here are a few more examples:
 
@@ -53,3 +73,51 @@ Here are a few more examples:
 
 What is the winning Elf's score?
 */
+const NUM_PLAYERS = 464;
+const TURNS = 70918;
+// const NUM_PLAYERS = 13;
+// const TURNS = 7999;
+
+main();
+
+function main() {
+  // 464 players; last marble is worth 70918 points
+  const players = Array(NUM_PLAYERS)
+    .fill(0)
+    .map(x => ({
+      score: 0
+    }));
+  const circle = [0, 2, 1, 3];
+  let activeIndex = 3;
+  for (let marble = 4; marble <= TURNS; marble++) {
+    //The marble that was just placed then becomes the current marble
+
+    if (marble % 23 === 0) {
+      const pluckIndex =
+        activeIndex - 7 < 0 ? circle.length + activeIndex - 7 : activeIndex - 7;
+      const [pluckScore] = circle.splice(pluckIndex, 1);
+      if (!pluckScore) {
+        throw "Waaah";
+      }
+      const player = players[marble % players.length];
+      player.score += marble + pluckScore;
+      activeIndex = pluckIndex;
+    } else {
+      const insertIndex =
+        activeIndex + 1 === circle.length ? 1 : activeIndex + 2;
+      circle.splice(insertIndex, 0, marble);
+      activeIndex = insertIndex;
+    }
+
+    //     multiple of 23,
+    // something entirely different happens. First, the current player keeps the marble they would
+    // have placed, adding it to their score. In addition, the marble 7 marbles counter-clockwise
+    // from the current marble is removed from the circle and also added to the current
+    // player's score. The marble located immediately clockwise of the marble that was removed
+    // becomes the new current marble.
+  }
+
+  players.sort((a, b) => b.score - a.score);
+
+  console.log(players[0].score);
+}
