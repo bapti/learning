@@ -1,13 +1,88 @@
+const { readFileToArray } = require("./utils");
+const INPUT_FILE = "./day10-input.txt";
+const MATRIX_SIZE = 120000;
+const OFFSET = 60000;
+const fs = require("fs");
+
+function readLine(line) {
+  const [posX, posY, xv, yv] = line.match(/[-\d]+/g).map(x => Number(x));
+  return { posX, posY, xv, yv };
+}
+
+function dimensions(positions) {
+  let minX = 60000;
+  let minY = 60000;
+  let maxX = -60000;
+  let maxY = -60000;
+  for (const { posX, posY } of positions) {
+    minX = posX < minX ? posX : minX;
+    minY = posY < minY ? posY : minY;
+    maxX = posX > maxX ? posX : maxX;
+    maxY = posY > maxY ? posY : maxY;
+  }
+  return { minX, minY, maxX, maxY };
+}
+
+function area(positions) {
+  const { minX, minY, maxX, maxY } = dimensions(positions);
+  return (maxX - minX) * (maxY - minY);
+}
+
+async function main() {
+  const positions = await readFileToArray(INPUT_FILE, readLine);
+  let prevArea = area(positions);
+
+  for (let second = 0; second < 10077; second++) {
+    const nextArea = area(positions);
+    if (second === 10076) {
+      const { minX, minY, maxX, maxY } = dimensions(positions);
+      const width = maxX - minX + 1;
+      const height = maxY - minY + 1;
+      let data = "";
+      for (let row = 0; row < height; row++) {
+        for (let col = 0; col < width; col++) {
+          data += positions.some(p => {
+            return p.posX === row && p.posY === col;
+          })
+            ? "#"
+            : ".";
+        }
+        data += "\n";
+      }
+
+      console.log(data);
+    }
+    prevArea = nextArea;
+    for (const position of positions) {
+      position.posX += position.xv;
+      position.posY += position.yv;
+    }
+  }
+
+  const stop = true;
+}
+
+main();
+
 /*
 --- Day 10: The Stars Align ---
 
-It's no use; your navigation system simply isn't capable of providing walking directions in the arctic circle, and certainly not in 1018.
+It's no use; your navigation system simply isn't capable of providing walking directions in 
+the arctic circle, and certainly not in 1018.
 
-The Elves suggest an alternative. In times like these, North Pole rescue operations will arrange points of light in the sky to guide missing Elves back to base. Unfortunately, the message is easy to miss: the points move slowly enough that it takes hours to align them, but have so much momentum that they only stay aligned for a second. If you blink at the wrong time, it might be hours before another message appears.
+The Elves suggest an alternative. In times like these, North Pole rescue operations will 
+arrange points of light in the sky to guide missing Elves back to base. Unfortunately, 
+the message is easy to miss: the points move slowly enough that it takes hours to align them, 
+but have so much momentum that they only stay aligned for a second. If you blink at the wrong 
+time, it might be hours before another message appears.
 
-You can see these points of light floating in the distance, and record their position in the sky and their velocity, the relative change in position per second (your puzzle input). The coordinates are all given from your perspective; given enough time, those positions and velocities will move the points into a cohesive message!
+You can see these points of light floating in the distance, and record their position in the 
+sky and their velocity, the relative change in position per second (your puzzle input). 
+The coordinates are all given from your perspective; given enough time, those positions 
+and velocities will move the points into a cohesive message!
 
-Rather than wait, you decide to fast-forward the process and calculate what the points will eventually spell.
+Rather than wait, you decide to fast-forward the process and calculate what the points 
+will eventually spell.
 
 For example, suppose you note the following points:
 
@@ -43,9 +118,14 @@ position=< 5,  9> velocity=< 1, -2>
 position=<14,  7> velocity=<-2,  0>
 position=<-3,  6> velocity=< 2, -1>
 
-Each line represents one point. Positions are given as <X, Y> pairs: X represents how far left (negative) or right (positive) the point appears, while Y represents how far up (negative) or down (positive) the point appears.
+Each line represents one point. Positions are given as <X, Y> pairs: X represents how far 
+left (negative) or right (positive) the point appears, while Y represents how far up 
+(negative) or down (positive) the point appears.
 
-At 0 seconds, each point has the position given. Each second, each point's velocity is added to its position. So, a point with velocity <1, -2> is moving to the right, but is moving upward twice as quickly. If this point's initial position were <3, 9>, after 3 seconds, its position would become <6, 3>.
+At 0 seconds, each point has the position given. Each second, each point's velocity is 
+added to its position. So, a point with velocity <1, -2> is moving to the right, but is
+moving upward twice as quickly. If this point's initial position were <3, 9>, after 3 
+seconds, its position would become <6, 3>.
 
 Over time, the points listed above would move like this:
 
@@ -139,7 +219,8 @@ After 4 seconds:
 ......................
 ......................
 
-After 3 seconds, the message appeared briefly: HI. Of course, your message will be much longer and will take many more seconds to appear.
+After 3 seconds, the message appeared briefly: HI. Of course, your message will be much 
+longer and will take many more seconds to appear.
 
 What message will eventually appear in the sky?
 */
