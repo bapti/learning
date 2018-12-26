@@ -74,11 +74,62 @@ Here are a few more examples:
 What is the winning Elf's score?
 */
 const NUM_PLAYERS = 464;
-const TURNS = 70918;
+const TURNS = 7091800;
+// const NUM_PLAYERS = 9;
+// const TURNS = 25;
+// const NUM_PLAYERS = 10;
+// const TURNS = 1618;
 // const NUM_PLAYERS = 13;
 // const TURNS = 7999;
 
-main();
+class MarbleCircle {
+  constructor() {
+    this.active = { value: 0, next: null, prev: null };
+    this.start = this.active;
+    this.length = 1;
+    this.active.next = this.active;
+    this.active.prev = this.active;
+  }
+
+  add(marble) {
+    if (marble % 23 === 0) {
+      for (let i = 0; i <= 7; i++) {
+        this.active = this.active.prev;
+      }
+      const { next, prev, value } = this.active;
+      next.prev = prev;
+      prev.next = next;
+      this.active = this.active.next;
+      this.active = this.active.next;
+
+      this.length--;
+      return value + marble;
+    }
+
+    const { next } = this.active;
+    this.active.next = {
+      value: marble,
+      next: next,
+      prev: this.active
+    };
+    next.prev = this.active.next;
+    this.active = this.active.next;
+    this.active = this.active.next;
+    this.length++;
+
+    return 0;
+  }
+
+  logList() {
+    let msg = "";
+    let next = this.start;
+    for (let i = 0; i < this.length; i++) {
+      msg += `  ${next.value}`;
+      next = next.next;
+    }
+    console.log(msg);
+  }
+}
 
 function main() {
   // 464 players; last marble is worth 70918 points
@@ -87,27 +138,13 @@ function main() {
     .map(x => ({
       score: 0
     }));
-  const circle = [0, 2, 1, 3];
-  let activeIndex = 3;
-  for (let marble = 4; marble <= TURNS; marble++) {
-    //The marble that was just placed then becomes the current marble
+  const circle = new MarbleCircle();
+  circle.logList();
 
-    if (marble % 23 === 0) {
-      const pluckIndex =
-        activeIndex - 7 < 0 ? circle.length + activeIndex - 7 : activeIndex - 7;
-      const [pluckScore] = circle.splice(pluckIndex, 1);
-      if (!pluckScore) {
-        throw "Waaah";
-      }
-      const player = players[marble % players.length];
-      player.score += marble + pluckScore;
-      activeIndex = pluckIndex;
-    } else {
-      const insertIndex =
-        activeIndex + 1 === circle.length ? 1 : activeIndex + 2;
-      circle.splice(insertIndex, 0, marble);
-      activeIndex = insertIndex;
-    }
+  for (let marble = 1; marble <= TURNS; marble++) {
+    //The marble that was just placed then becomes the current marble
+    const player = players[marble % players.length];
+    player.score += circle.add(marble);
 
     //     multiple of 23,
     // something entirely different happens. First, the current player keeps the marble they would
@@ -121,3 +158,5 @@ function main() {
 
   console.log(players[0].score);
 }
+
+main();
