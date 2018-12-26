@@ -1,11 +1,11 @@
 const { readFileToArray } = require("./utils");
 const _ = require("lodash");
-const alphabet = [..."ABCDEF"].reduce((acc, id) => {
-  //const alphabet = [..."ABCDEFGHIJKLMNOPQRSTUVWXYZ"].reduce((acc, id) => {
+//const alphabet = [..."ABCDEF"].reduce((acc, id) => {
+const alphabet = [..."ABCDEFGHIJKLMNOPQRSTUVWXYZ"].reduce((acc, id) => {
   acc[id] = { id, dependencies: [] };
   return acc;
 }, {});
-const STEP_SECONDS = 0;
+const STEP_SECONDS = 60;
 
 main();
 
@@ -25,7 +25,8 @@ function compareGroups(a, b) {
 }
 
 async function main() {
-  const steps = await readFileToArray("./day7-test-input.txt", readLine);
+  // const steps = await readFileToArray("./day7-test-input.txt", readLine);
+  const steps = await readFileToArray("./day7-input.txt", readLine);
 
   const groupedSteps = steps.reduce((acc, { id, dependsOn }) => {
     acc[id] = acc[id] || { id, dependencies: [] };
@@ -36,7 +37,7 @@ async function main() {
   const stepsLeft = Object.values(groupedSteps);
   let completedSteps = "";
   let seconds = 0;
-  let workers = Array(2)
+  let workers = Array(5)
     .fill(0)
     .map(() => ({ seconds: 0, step: "." }));
 
