@@ -28,40 +28,60 @@ function area(positions) {
   return (maxX - minX) * (maxY - minY);
 }
 
-async function main() {
+function printStars(positions, second) {
+  console.log(`Star alignment at ${second} seconds`);
+  const { minX, minY, maxX, maxY } = dimensions(positions);
+  let data = "";
+  for (let row = minY; row <= maxY; row++) {
+    for (let col = minX; col <= maxX; col++) {
+      data += positions.some(p => {
+        return p.posX === col && p.posY === row;
+      })
+        ? "#"
+        : ".";
+    }
+    data += "\n";
+  }
+
+  console.log(data);
+}
+
+async function starsAlignAt() {
   const positions = await readFileToArray(INPUT_FILE, readLine);
   let prevArea = area(positions);
-
-  for (let second = 0; second < 10077; second++) {
-    const nextArea = area(positions);
-    if (second === 10076) {
-      const { minX, minY, maxX, maxY } = dimensions(positions);
-      const width = maxX - minX + 1;
-      const height = maxY - minY + 1;
-      let data = "";
-      for (let row = 0; row < height; row++) {
-        for (let col = 0; col < width; col++) {
-          data += positions.some(p => {
-            return p.posX === row && p.posY === col;
-          })
-            ? "#"
-            : ".";
-        }
-        data += "\n";
-      }
-
-      console.log(data);
-    }
-    prevArea = nextArea;
+  let convergenceSecond = 0;
+  while (true) {
     for (const position of positions) {
       position.posX += position.xv;
       position.posY += position.yv;
     }
-  }
+    convergenceSecond++;
+    const nextArea = area(positions);
 
-  const stop = true;
+    if (prevArea < nextArea) {
+      console.log(`Stars align in ${convergenceSecond - 1} seconds`);
+      process.exit(0);
+    }
+
+    prevArea = nextArea;
+  }
 }
 
+async function main() {
+  const positions = await readFileToArray(INPUT_FILE, readLine);
+  let second = 0;
+
+  while (second < 10076) {
+    for (const position of positions) {
+      position.posX += position.xv;
+      position.posY += position.yv;
+    }
+    second++;
+  }
+  printStars(positions, second);
+}
+
+// starsAlignAt();
 main();
 
 /*
