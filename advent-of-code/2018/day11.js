@@ -1,3 +1,75 @@
+const GRIDSIZE = 301;
+//const SERIAL_NUMBER = 8772;
+const SERIAL_NUMBER = 18;
+
+function calcPowerLevel(x, y, serialNumber) {
+  // Find the fuel cell's rack ID, which is its X coordinate plus 10.
+  // Begin with a power level of the rack ID times the Y coordinate.
+  // Increase the power level by the value of the grid serial number (your puzzle input).
+  // Set the power level to itself multiplied by the rack ID.
+  // Keep only the hundreds digit of the power level (so 12345 becomes 3; numbers with
+  //   no hundreds digit become 0).
+  // Subtract 5 from the power level.
+  const rackId = x + 10;
+  let powerLevel = (rackId * y + serialNumber) * rackId;
+  const hundreds = Number([...powerLevel.toString()].reverse()[2]) || 0;
+  return hundreds - 5;
+}
+
+function calcGridScore(x, y, powerMatrix, sizeOfSquare) {
+  if (x + sizeOfSquare > GRIDSIZE || y + sizeOfSquare > GRIDSIZE)
+    throw "too big";
+  let total = 0;
+  for (let i = x; i <= x + sizeOfSquare; i++) {
+    for (let j = y; j <= y + sizeOfSquare; j++) {
+      total += powerMatrix[i][j];
+    }
+  }
+  return total;
+}
+
+function main() {
+  const powerMatrix = Array(GRIDSIZE)
+    .fill(0)
+    .map(x => Array(GRIDSIZE).fill(0));
+
+  for (let x = 1; x <= 300; x++) {
+    for (let y = 1; y <= 300; y++) {
+      const powerLevel = calcPowerLevel(x, y, SERIAL_NUMBER);
+      powerMatrix[x][y] = powerLevel;
+    }
+  }
+
+  let topScore = { score: -100 };
+
+  for (let x = 1; x <= 300; x++) {
+    for (let y = 1; y <= 300; y++) {
+      let sizeOfSquare = 0;
+      while (x + sizeOfSquare < 301 && y + sizeOfSquare < 301) {
+        const score = calcGridScore(x, y, powerMatrix, sizeOfSquare);
+        if (topScore.score < score) {
+          topScore = { x, y, score, sizeOfSquare };
+        }
+        sizeOfSquare++;
+      }
+    }
+  }
+
+  const { x, y, sizeOfSquare, score } = topScore;
+  console.log(
+    `Top score ${x}(x),${y}(y) score ${score} sizeOfSquare ${sizeOfSquare + 1}`
+  );
+}
+
+main();
+
+// Fuel cell at  122,79, grid serial number 57: power level -5.
+// Fuel cell at 217,196, grid serial number 39: power level  0.
+// Fuel cell at 101,153, grid serial number 71: power level  4.
+// console.log(calcPowerLevel(122, 79, 57), 122, 79, 57);
+// console.log(calcPowerLevel(217, 196, 39), 217, 196, 39);
+// console.log(calcPowerLevel(101, 153, 71), 101, 153, 71);
+
 /*
 
 --- Day 11: Chronal Charge ---
