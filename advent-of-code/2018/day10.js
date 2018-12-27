@@ -1,8 +1,5 @@
 const { readFileToArray } = require("./utils");
 const INPUT_FILE = "./day10-input.txt";
-const MATRIX_SIZE = 120000;
-const OFFSET = 60000;
-const fs = require("fs");
 
 function readLine(line) {
   const [posX, posY, xv, yv] = line.match(/[-\d]+/g).map(x => Number(x));
