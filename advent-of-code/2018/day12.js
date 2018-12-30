@@ -42,15 +42,10 @@ function main() {
   console.log(`Score ${score}`);
   file.end();
 
-  const fiftybillion = 50 * 1000 * 1000 * 1000;
-  const plants = allPots.reduce((acc, item, index) => {
-    if (item === "#") {
-      acc.push(index + OFFSET_LEFT);
-    }
-    return acc;
-  }, []);
+  const FIFTY_BILLION = 50 * 1000 * 1000 * 1000;
+  const totalPlants = allPots.reduce((n, x) => (x === "#" ? n + 1 : n), 0);
 
-  const finalScore = plants.length * (fiftybillion - TOTAL_GENERATIONS) + score;
+  const finalScore = totalPlants * (FIFTY_BILLION - TOTAL_GENERATIONS) + score;
   console.log(`Final score ${finalScore}`);
 }
 
