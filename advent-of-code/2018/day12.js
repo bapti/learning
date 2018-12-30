@@ -1,6 +1,13 @@
 const { INITIAL_POTS_STATE, COMBINATIONS } = require("./day12-input");
 const OFFSET_LEFT = 20;
-const OFFSET_RIGHT = 40;
+const OFFSET_RIGHT = 500;
+const TOTAL_GENERATIONS = 250;
+const fs = require("fs");
+
+const file = fs.createWriteStream("day12-output.txt");
+// file.on("error", function(err) {
+//   /* error handling */
+// });
 
 function populatePots() {
   return Array(INITIAL_POTS_STATE.length + OFFSET_LEFT + OFFSET_RIGHT)
@@ -15,7 +22,7 @@ function populatePots() {
 
 function main() {
   let allPots = populatePots();
-  for (let generation = 1; generation < 21; generation++) {
+  for (let generation = 1; generation <= TOTAL_GENERATIONS; generation++) {
     const nextGeneration = allPots.map(x => x);
     for (let pot = 2; pot < allPots.length - 2; pot++) {
       const lookup =
@@ -27,12 +34,24 @@ function main() {
       const next = COMBINATIONS[lookup] || ".";
       nextGeneration[pot] = next;
     }
-    console.log(generation, nextGeneration.join(""));
     allPots = nextGeneration;
+    file.write(`${generation} ` + nextGeneration.join("") + "\n");
   }
 
   const score = calculateScore(allPots, OFFSET_LEFT);
   console.log(`Score ${score}`);
+  file.end();
+
+  const fiftybillion = 50 * 1000 * 1000 * 1000;
+  const plants = allPots.reduce((acc, item, index) => {
+    if (item === "#") {
+      acc.push(index + OFFSET_LEFT);
+    }
+    return acc;
+  }, []);
+
+  const finalScore = plants.length * (fiftybillion - TOTAL_GENERATIONS) + score;
+  console.log(`Final score ${finalScore}`);
 }
 
 function calculateScore(pots, offset) {
