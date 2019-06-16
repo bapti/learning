@@ -9,7 +9,7 @@
 
 ## Reflections on my solution
 
-Correctness - I believe that the program I've written hits the mark on correctness, I've written simple tests are easy to extend and prove the simple cases.
+Correctness - I believe that the program I've written hits the mark on correctness, I've written some simple tests to  prove the simple cases.
 
 Efficiency - I've used an off the shelf K-D Tree implementation that allows for efficient querying of nearest neighbor rather than my original crude brute force loop over all places. If I'd had time I would've implemented this myself from scratch but I can't commit any more time at the moment. A further efficieny improvement would be to use node workers to farm out the nearest neighbor queries and peform them in parallel.
 
