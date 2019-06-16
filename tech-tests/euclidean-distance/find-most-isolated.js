@@ -1,31 +1,21 @@
+const { kdTree } = require("kd-tree-javascript");
+
 function findMostIsolatedPlace(places) {
-  let mostIsolated = places[0];
-  for (let i = 0; i < places.length; i++) {
-    const { x: xA, y: yA } = places[i];
+  const tree = new kdTree(places, euclidenaDistance, ["x", "y"]);
 
-    for (let j = i + 1; j < places.length; j++) {
-      const { x: xB, y: yB } = places[j];
-      const euclidenaDistance = Math.abs(xA - xB) + Math.abs(yA - yB);
-      setNearestNeighbor(places[i], places[j], euclidenaDistance);
-    }
+  for (const place of places) {
+    const [[nearest]] = tree.nearest(place, 2);
 
-    if (mostIsolated.nearestDistance < places[i].nearestDistance) {
-      mostIsolated = places[i];
-    }
+    place.nearestDistance = euclidenaDistance(place, nearest);
   }
 
-  return mostIsolated;
+  places.sort((a, b) => b.nearestDistance - a.nearestDistance);
+
+  return places[0];
 }
 
-function setNearestNeighbor(placeA, placeB, distance) {
-  if (placeA.nearestDistance > distance) {
-    placeA.nearestId = placeB.id;
-    placeA.nearestDistance = distance;
-  }
-  if (placeB.nearestDistance > distance) {
-    placeB.nearestId = placeA.id;
-    placeB.nearestDistance = distance;
-  }
+function euclidenaDistance(pointA, pointB) {
+  return Math.abs(pointA.x - pointB.x) + Math.abs(pointA.y - pointB.y);
 }
 
 module.exports = {

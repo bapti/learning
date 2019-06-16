@@ -5,9 +5,7 @@ describe("parseLine", function() {
     expect(result).toEqual({
       id: 0,
       x: 1312573,
-      y: 8418602,
-      nearestId: -1,
-      nearestDistance: Number.MAX_SAFE_INTEGER
+      y: 8418602
     });
   });
 });

@@ -4,9 +4,7 @@ function parseLine(line, id) {
   return {
     id,
     x: Number(x),
-    y: Number(y),
-    nearestId: -1,
-    nearestDistance: Number.MAX_SAFE_INTEGER
+    y: Number(y)
   };
 }
 
