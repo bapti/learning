@@ -2,16 +2,19 @@ const { kdTree } = require("kd-tree-javascript");
 
 function findMostIsolatedPlace(places) {
   const tree = new kdTree(places, euclidenaDistance, ["x", "y"]);
+  let mostIsolated = { nearestDistance: 0 };
 
   for (const place of places) {
     const [[nearest]] = tree.nearest(place, 2);
 
     place.nearestDistance = euclidenaDistance(place, nearest);
+
+    if (mostIsolated.nearestDistance < place.nearestDistance) {
+      mostIsolated = place;
+    }
   }
 
-  places.sort((a, b) => b.nearestDistance - a.nearestDistance);
-
-  return places[0];
+  return mostIsolated;
 }
 
 function euclidenaDistance(pointA, pointB) {
