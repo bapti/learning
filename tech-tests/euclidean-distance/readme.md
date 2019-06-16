@@ -9,11 +9,11 @@
 
 ## Thoughts on solution
 
-I believe that the program I've written hits the mark on correctness, I've written simple tests are easy to extend and prove the simple cases. 
+I believe that the program I've written hits the mark on correctness, I've written simple tests are easy to extend and prove the simple cases.
 
-I feel like this could be far more efficient. For instance I as I read the file, I should probably be writing each entry into a data structure (K-D Tree) that would allow for more efficient querying of nearest neighbor rather than my crude brute force loop over all places.
+From an efficiency standpoint this could be far more efficient. For instance as I read the file, I should probably be writing each entry into a data structure (K-D Tree) that would allow for more efficient querying of nearest neighbor rather than my crude brute force loop over all places.
 
-I feel the program is be concise and simple, program control, file reading and business logic are separated.
+I feel the program is concise and simple, program control, file reading and business logic are separated.
 
 ## Problem statement
 
@@ -29,6 +29,7 @@ We would like to find the most isolated feature on the map, where the "most isol
 furthest (largest Euclidian distance) from any other feature. Because the map does not "wrap around", this should be a 
 direct distance across the map.
 
+```
 <----10000000---->
  ---------------      -
 | A             |     |
@@ -38,7 +39,8 @@ direct distance across the map.
 |          B  C |     | 	
 |        E   D  |     |
  ---------------      -   
- 
+```
+
 In the example above, A is the most isolated feature on the square map with edge length 10000000.
 
 We would like you to write a program that reads in many features from standard input, and outputs the name of the most isolated 
@@ -50,10 +52,10 @@ Any of the following languages are cool - Python (>=2.5), C#, Ruby (>=1.9.2), Ac
 
 Submissions are marked based on the following criteria
 
-	* Correctness - The program should read the input format as specified and write the correct answer to standard output.
-	* Efficiency - The program should be fast, i.e., the algorithm should exhibit better than n^2 growth
-	* Elegance - The program should be concise and simple
-	
+* Correctness - The program should read the input format as specified and write the correct answer to standard output.
+* Efficiency - The program should be fast, i.e., the algorithm should exhibit better than n^2 growth
+* Elegance - The program should be concise and simple
+
 Two example inputs are provided; problem_small.txt should output place6 and problem_big.txt should output place55163
 
 This exercise shouldn't take too long - if you find it is taking more than an hour or two you should consider reading this document again.
