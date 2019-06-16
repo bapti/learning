@@ -7,13 +7,13 @@
 3. Run `npm start` to run the program against the big file
 4. Run `npm test` to run the tests for the program
 
-## Thoughts on solution
+## Reflections on my solution
 
-I believe that the program I've written hits the mark on correctness, I've written simple tests are easy to extend and prove the simple cases.
+Correctness - I believe that the program I've written hits the mark on correctness, I've written simple tests are easy to extend and prove the simple cases.
 
-From an efficiency standpoint this could be far more efficient. For instance as I read the file, I should probably be writing each entry into a data structure (K-D Tree) that would allow for more efficient querying of nearest neighbor rather than my crude brute force loop over all places.
+Efficiency - I've used an off the shelf K-D Tree implementation that allows for efficient querying of nearest neighbor rather than my original crude brute force loop over all places. If I'd had time I would've implemented this myself from scratch but I can't commit any more time at the moment. A further efficieny improvement would be to use node workers to farm out the nearest neighbor queries and peform them in parallel.
 
-I feel the program is concise and simple, program control, file reading and business logic are separated.
+Elegance - I feel the program is concise and simple, program control, file reading and business logic are separated.
 
 ## Problem statement
 
