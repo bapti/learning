@@ -1,7 +1,9 @@
 const { readFileToArray } = require("./read-file-to-array");
+const { parseLine } = require("./line-parser");
+
 describe("readFileToArray", function() {
   it("should resond with test data", async function() {
-    const actualData = await readFileToArray("./problem_small.txt");
+    const actualData = await readFileToArray("./problem_small.txt", parseLine);
     expect(actualData).toEqual(testData);
   });
 });
