@@ -19,37 +19,25 @@ async function main() {
   const matrix = Array(400)
     .fill([])
     .map(x => Array(400).fill("."));
+  let area = 0;
 
   for (let x1 = 0; x1 < 400; x1++) {
     for (let y1 = 0; y1 < 400; y1++) {
-      points.sort((a, b) => a.distance(x1, y1) - b.distance(x1, y1));
-
-      const [a, b] = points;
-      if (a.distance(x1, y1) < b.distance(x1, y1)) {
-        matrix[x1][y1] = a.id;
+      if (points.reduce((acc, p) => acc + p.distance(x1, y1), 0) < 10000) {
+        matrix[x1][y1] = "#";
       }
     }
   }
 
-  points.sort((a, b) => a.id - b.id);
-
   for (let x1 = 0; x1 < 400; x1++) {
     for (let y1 = 0; y1 < 400; y1++) {
-      const pointId = matrix[x1][y1];
-      if (pointId !== ".") {
-        points[pointId].area++;
-        if (x1 === 0 || x1 === 399 || y1 === 0 || y1 === 399) {
-          points[pointId].isInfinite = true;
-        }
+      if (matrix[x1][y1] === "#") {
+        area++;
       }
     }
   }
 
-  const nonInfinite = points.filter(x => !x.isInfinite);
-  nonInfinite.sort((a, b) => b.area - a.area);
-  const [biggest] = nonInfinite;
-
-  console.log(biggest.area, biggest.id);
+  console.log(area);
 
   process.exit(0);
 }

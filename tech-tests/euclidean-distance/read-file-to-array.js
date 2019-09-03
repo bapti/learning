@@ -1,8 +1,8 @@
-const fs = require("fs"),
-  readline = require("readline"),
-  stream = require("stream");
+const fs = require("fs");
+const readline = require("readline");
+const stream = require("stream");
 
-async function readFileToArray(filePath, lineIterator) {
+async function readFileToArray(filePath, parseLine) {
   return new Promise(function(resolve, reject) {
     const outArray = [];
     var instream = fs.createReadStream(filePath);
@@ -17,7 +17,7 @@ async function readFileToArray(filePath, lineIterator) {
     });
 
     rl.on("line", function(line) {
-      const formattedLine = lineIterator(line, outArray.length);
+      const formattedLine = parseLine(line, outArray.length);
       outArray.push(formattedLine);
     });
 
