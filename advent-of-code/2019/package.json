@@ -4,7 +4,8 @@
   "description": "",
   "main": "day01.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "repl": "node --experimental-repl-await ./repl.js"
   },
   "author": "",
   "license": "ISC",
