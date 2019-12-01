@@ -1,0 +1,25 @@
+{
+  "name": "puzzles",
+  "version": "1.0.0",
+  "description": "Repo for messing around with puzzles",
+  "scripts": {
+    "start": "node bin/puzzles",
+    "totalize": "node bin/totalize",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bapti/puzzles.git"
+  },
+  "author": "Neil Crawford",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bapti/puzzles/issues"
+  },
+  "homepage": "https://github.com/bapti/puzzles#readme",
+  "devDependencies": {
+    "eslint": "^6.7.0",
+    "jest": "^24.9.0"
+  },
+  "dependencies": {}
+}
