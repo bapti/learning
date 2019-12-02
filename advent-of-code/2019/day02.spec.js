@@ -26,10 +26,3 @@ describe("Day2 part 1", () => {
     expect(calcIntcodes(input)).toEqual(expected);
   });
 });
-
-describe("Main", () => {
-  it.only("should return result", async () => {
-    const result = await main();
-    console.log(result);
-  });
-});
