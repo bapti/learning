@@ -19,7 +19,7 @@ What is the sum of the fuel requirements for all of the modules on your spacecra
 */
 const { fuelCalc, fullFuelCalc } = require("./day01.js");
 
-describe("Day 1a tests", () => {
+describe.skip("Day 1a tests", () => {
   it.each([
     [12, 2],
     [14, 2],
@@ -30,7 +30,7 @@ describe("Day 1a tests", () => {
   });
 });
 
-describe("Day 1b tests", () => {
+describe.skip("Day 1b tests", () => {
   it.each([
     [1969, [654, 216, 70, 21, 5]],
     [100756, [33583, 11192, 3728, 1240, 411, 135, 43, 12, 2]]

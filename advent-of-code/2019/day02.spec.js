@@ -1,6 +1,6 @@
 const { calcIntcodes, main } = require("./day02");
 
-describe("Day2 part 1", () => {
+describe.skip("Day2 part 1", () => {
   it.each([
     [
       [1, 0, 0, 0, 99],
