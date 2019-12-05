@@ -4,7 +4,7 @@ const {
   numberOfValidPasswords
 } = require("./day04");
 
-describe.only("Day4 part 2", () => {
+describe.skip("Day4 part 2", () => {
   it("112233 is valid", () => {
     expect(validatePassword2(112233)).toEqual(true);
   });
@@ -22,7 +22,7 @@ describe.only("Day4 part 2", () => {
   });
 });
 
-describe("Day4 part 1", () => {
+describe.skip("Day4 part 1", () => {
   it("111111 is valid", () => {
     expect(validatePassword1(111111)).toEqual(true);
   });
