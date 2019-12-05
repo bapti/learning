@@ -37,4 +37,6 @@ async function main() {
   return x + y;
 }
 
-function closestIntersection(line1, line2) {}
+function closestIntersection(line1, line2) {
+  return [1, 1];
+}

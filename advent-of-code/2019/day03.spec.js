@@ -32,8 +32,17 @@ describe("Day3 part 1", () => {
   });
 });
 
-describe.skip("Day3 test cases", () => {
-  it("should have distance of X", () => {
+describe("Day3 test cases", () => {
+  it("should have coords of 0, 0", () => {
+    expect(
+      closestIntersection(
+        parseLineInstruction("R8,U5,L5,D3"),
+        parseLineInstruction("U7,R6,D4,L4")
+      )
+    ).toEqual([0, 0]);
+  });
+
+  it.skip("should have distance of X", () => {
     expect(
       closestIntersection(
         parseLineInstruction("R75,D30,R83,U83,L12,D49,R71,U7,L72"),
@@ -42,16 +51,7 @@ describe.skip("Day3 test cases", () => {
     ).toEqual(159);
   });
 
-  it("should have distance of X", () => {
-    expect(
-      closestIntersection(
-        parseLineInstruction("R75,D30,R83,U83,L12,D49,R71,U7,L72"),
-        parseLineInstruction("U62,R66,U55,R34,D71,R55,D58,R83")
-      )
-    ).toEqual(159);
-  });
-
-  it("should have distance of 135", () => {
+  it.skip("should have distance of 135", () => {
     expect(
       closestIntersection(
         parseLineInstruction("R98,U47,R26,D63,R33,U87,L62,D20,R33,U53,R51"),
