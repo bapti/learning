@@ -1,4 +1,11 @@
-const { closestIntersection, parseLineInstruction } = require("./day03");
+const {
+  findIntersections,
+  parseLineInstruction,
+  findClosestManhattenDistancePoint,
+  closestIntersectionBySteps,
+  solveA,
+  solveB
+} = require("./day03");
 
 describe("Day3 part 1", () => {
   it("should parse a line instruction", () => {
@@ -33,30 +40,64 @@ describe("Day3 part 1", () => {
 });
 
 describe("Day3 test cases", () => {
-  it("should have coords of 0, 0", () => {
+  it("should have distance of 159", () => {
     expect(
-      closestIntersection(
-        parseLineInstruction("R8,U5,L5,D3"),
-        parseLineInstruction("U7,R6,D4,L4")
-      )
-    ).toEqual([0, 0]);
-  });
-
-  it.skip("should have distance of X", () => {
-    expect(
-      closestIntersection(
-        parseLineInstruction("R75,D30,R83,U83,L12,D49,R71,U7,L72"),
-        parseLineInstruction("U62,R66,U55,R34,D71,R55,D58,R83")
-      )
+      findClosestManhattenDistancePoint([
+        ...findIntersections(
+          parseLineInstruction("R75,D30,R83,U83,L12,D49,R71,U7,L72"),
+          parseLineInstruction("U62,R66,U55,R34,D71,R55,D58,R83")
+        )
+      ])
     ).toEqual(159);
   });
 
-  it.skip("should have distance of 135", () => {
+  it("should have distance of 135", () => {
     expect(
-      closestIntersection(
+      findClosestManhattenDistancePoint([
+        ...findIntersections(
+          parseLineInstruction("R98,U47,R26,D63,R33,U87,L62,D20,R33,U53,R51"),
+          parseLineInstruction("U98,R91,D20,R16,D67,R40,U7,R15,U6,R7")
+        )
+      ])
+    ).toEqual(135);
+  });
+
+  it("should solve part A", async () => {
+    const result = await solveA();
+    expect(result).toEqual(1211);
+  });
+});
+
+describe("Day 3 part B", () => {
+  it("should take 30 steps to first intersection", () => {
+    expect(
+      closestIntersectionBySteps(
+        parseLineInstruction("R8,U5,L5,D3"),
+        parseLineInstruction("U7,R6,D4,L4")
+      )
+    ).toEqual(30);
+  });
+
+  it("should take 30 steps to first intersection", () => {
+    expect(
+      closestIntersectionBySteps(
+        parseLineInstruction("R75,D30,R83,U83,L12,D49,R71,U7,L72"),
+        parseLineInstruction("U62,R66,U55,R34,D71,R55,D58,R83")
+      )
+    ).toEqual(610);
+  });
+
+  it("should take 30 steps to first intersection", () => {
+    expect(
+      closestIntersectionBySteps(
         parseLineInstruction("R98,U47,R26,D63,R33,U87,L62,D20,R33,U53,R51"),
         parseLineInstruction("U98,R91,D20,R16,D67,R40,U7,R15,U6,R7")
       )
-    ).toEqual(135);
+    ).toEqual(410);
+  });
+
+  it("should solve part B", async () => {
+    const result = await solveB();
+    expect(result).toEqual(182360);
   });
 });
