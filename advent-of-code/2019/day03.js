@@ -34,11 +34,8 @@ async function solveA() {
     "./day03-input.txt",
     parseLineInstruction
   );
-
   const intersectionPoints = [...findIntersections(line1, line2)];
-
   const closestDistance = findClosestManhattenDistancePoint(intersectionPoints);
-
   return closestDistance;
 }
 

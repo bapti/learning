@@ -98,6 +98,6 @@ describe("Day 3 part B", () => {
 
   it("should solve part B", async () => {
     const result = await solveB();
-    expect(result).toEqual(182360);
+    expect(result).toEqual(101386);
   });
 });
