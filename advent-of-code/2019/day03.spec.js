@@ -7,7 +7,7 @@ const {
   solveB
 } = require("./day03");
 
-describe("Day3 part 1", () => {
+describe.skip("Day3 part 1", () => {
   it("should parse a line instruction", () => {
     const line = parseLineInstruction("U4,D123,L23,R54");
     expect(line).toEqual([
@@ -39,7 +39,7 @@ describe("Day3 part 1", () => {
   });
 });
 
-describe("Day3 test cases", () => {
+describe.skip("Day3 test cases", () => {
   it("should have distance of 159", () => {
     expect(
       findClosestManhattenDistancePoint([
@@ -68,7 +68,7 @@ describe("Day3 test cases", () => {
   });
 });
 
-describe("Day 3 part B", () => {
+describe.skip("Day 3 part B", () => {
   it("should take 30 steps to first intersection", () => {
     expect(
       closestIntersectionBySteps(
