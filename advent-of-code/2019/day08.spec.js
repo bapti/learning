@@ -1,4 +1,4 @@
-const { parseLine, printImage } = require("./day08");
+const { parseLine, printImage } = require("./day 8");
 
 describe("Day8 part 2", () => {
   it("should split 0222112222120000 into an array of number", () => {

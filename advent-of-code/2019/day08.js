@@ -3,6 +3,7 @@ const { readFileToArray } = require("./utils");
 module.exports = {
   parseLine,
   main,
+  main2,
   printImage
 };
 
@@ -21,7 +22,7 @@ async function main() {
 async function main2() {
   const [numbers] = await readFileToArray("./day08-input.txt", parseLine);
   const layers = chunk(numbers, 25 * 6);
-  return printImage(layers, 6);
+  return printImage(layers, 6, 25);
 }
 
 function printImage(layers, height, width) {
@@ -31,14 +32,14 @@ function printImage(layers, height, width) {
       const pixel = layer[pixelIndex];
       if (pixel === 0 || pixel === 1) {
         image.push(pixel);
-        continue;
+        break;
       }
     }
   }
-  const printed = chunk(image, height)
+  const printed = chunk(image, width)
     .map(row => row.join(""))
     .flat()
-    .join("/n");
+    .join("\n");
 
   return printed;
 }
