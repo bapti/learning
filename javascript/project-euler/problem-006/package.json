@@ -13,7 +13,7 @@
   "dependencies": {
     "babel": "^5.8.23",
     "highland": "^2.5.1",
-    "lodash": "^3.10.1"
+    "lodash": "^4.17.15"
   },
   "devDependencies": {
     "mocha": "^2.3.2",
