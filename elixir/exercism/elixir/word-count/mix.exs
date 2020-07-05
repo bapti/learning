@@ -1,14 +1,13 @@
-defmodule RnaTranscription.MixProject do
+defmodule WordCount.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :rna_transcription,
+      app: :word_count,
       version: "0.1.0",
       # elixir: "~> 1.8",
       start_permanent: Mix.env() == :prod,
-      deps: deps(),
-      aliases: [test: "test --color"],
+      deps: deps()
     ]
   end
 
