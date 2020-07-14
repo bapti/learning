@@ -22,23 +22,20 @@ defmodule ProteinTranslation do
   @doc """
   Given an RNA string, return a list of proteins specified by codons, in order.
   """
+  # @spec of_rna(List.t(), List.t()) :: {atom, list(String.t())}
+  def of_rna([], acc), do: {:ok, acc}
+
+  def of_rna([codon | rest], acc) do
+    case of_codon(codon) do
+      {:ok, "STOP"} -> {:ok, acc}
+      {:ok, str} -> of_rna(rest, acc ++ [str])
+      {:error, _} -> {:error, "invalid RNA"}
+    end
+  end
+
   @spec of_rna(String.t()) :: {atom, list(String.t())}
   def of_rna(rna) do
-    chunks = for <<x::binary-3 <- rna>>, do: x
-
-    try do
-      s =
-        Enum.map(chunks, &of_codon(&1))
-        |> Enum.map(fn
-          {:ok, str} -> str
-          {:error, _} -> raise "invalid RNA"
-        end)
-        |> Enum.take_while(&(&1 !== "STOP"))
-
-      {:ok, s}
-    rescue
-      RuntimeError -> {:error, "invalid RNA"}
-    end
+    of_rna(for(<<x::binary-3 <- rna>>, do: x), [])
   end
 
   @doc """
