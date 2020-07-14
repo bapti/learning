@@ -15,5 +15,32 @@ defmodule SpaceAge do
   """
   @spec age_on(planet, pos_integer) :: float
   def age_on(planet, seconds) do
+    earth_years = seconds / 31_557_600
+
+    case planet do
+      :earth ->
+        earth_years
+
+      :mercury ->
+        earth_years / 0.2408467
+
+      :venus ->
+        earth_years / 0.61519726
+
+      :mars ->
+        earth_years / 1.8808158
+
+      :jupiter ->
+        earth_years / 11.862615
+
+      :saturn ->
+        earth_years / 29.447498
+
+      :uranus ->
+        earth_years / 84.016846
+
+      :neptune ->
+        earth_years / 164.79132
+    end
   end
 end
