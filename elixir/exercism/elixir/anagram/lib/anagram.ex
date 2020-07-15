@@ -1,7 +1,4 @@
 defmodule Anagram do
-  defguard are_words_equivalent(word_a, word_b)
-           when String.downcase(word_a) == String.downcase(word_b)
-
   @doc """
   Returns all candidates that are anagrams of, but not equal to, 'base'.
   """
